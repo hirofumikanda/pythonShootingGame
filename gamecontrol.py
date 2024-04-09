@@ -1,5 +1,5 @@
 import pygame as pg
-import random, player, enemy, bullet, status, sound
+import player, enemy, bullet, status, sound
 
 class Subject:
     def __init__(self):

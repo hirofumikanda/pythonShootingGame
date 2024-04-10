@@ -19,6 +19,7 @@ class SoundManager():
         self._clap3 = pg.mixer.Sound("sounds/clap3.wav")
         self._blast = pg.mixer.Sound("sounds/blast.wav")
         self._bomb = pg.mixer.Sound("sounds/bomb.wav")
+        self._recover1 = pg.mixer.Sound("sounds/recover1.mp3")
     
     def bgmstart(self): # BGM再生
         pg.mixer.music.play(-1)
@@ -46,3 +47,6 @@ class SoundManager():
     
     def playbomb(self): # 自機爆発音
         self._bomb.play()
+    
+    def plyarecoversmall(self): # 回復音（小）
+        self._recover1.play()

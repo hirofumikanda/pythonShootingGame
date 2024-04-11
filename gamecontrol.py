@@ -115,7 +115,7 @@ class GameManager(Subject):
                     sound.SoundManager.get_instance().playbomb()
                     self._enemies.remove(e)
                     self._player.damage()
-                    self._player.hp -= 50
+                    self._player.hp -= e.attack
                     if self._player.hp <= 0:
                         self._is_playing = False
                         sound.SoundManager.get_instance().bgmstop()

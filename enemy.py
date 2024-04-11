@@ -12,6 +12,7 @@ class Enemy():
         self._maxhp = 100
         self._hp = 100
         self._is_alive = True
+        self._attack = 50
 
     @property
     def is_alive(self):
@@ -37,6 +38,9 @@ class Enemy():
     @vy.setter
     def vy(self, value):
         self._vy = value
+    @property
+    def attack(self):
+        return self._attack
 
     def update(self):
         if self._rect.x < 0 or self._rect.x > 550:
@@ -55,6 +59,10 @@ class Enemy():
         pg.draw.rect(screen, pg.Color("RED"), rect1)
         pg.draw.rect(screen, pg.Color("GREEN"), rect2)
 
+'''
+炎のモンスター
+落下速度が速い
+'''
 class FlameEnemy(Enemy):
     def __init__(self):
         super().__init__()
@@ -62,12 +70,28 @@ class FlameEnemy(Enemy):
         self._vx = random.uniform(-2, 2)
         self._vy = random.uniform(5, 7)
 
+'''
+氷のモンスター
+最大HPが多い
+'''
 class IceEnemy(Enemy):
     def __init__(self):
         super().__init__()
         self._image = pg.image.load("images/enemy3.png")
         self._maxhp = 150
         self._hp = 150
+
+'''
+炎のモンスター２
+落下速度が速くダメージ量も多い
+'''
+class StrongFlameEnemy(Enemy):
+    def __init__(self):
+        super().__init__()
+        self._image = pg.image.load("images/enemy4.png")
+        self._vx = random.uniform(-2, 2)
+        self._vy = random.uniform(5, 7)
+        self._attack = 100
 
 class BombEffect():
     def __init__(self, rect, effects):
@@ -101,8 +125,10 @@ class EnemyFactory():
             return FlameEnemy()
         if etype == "ice":
             return IceEnemy()
+        if etype == "strongflame":
+            return StrongFlameEnemy()
         return Enemy()
     
     def random_create(self): # ランダムに作る
-        etype = random.choice(["normal", "flame", "ice"])
+        etype = random.choice(["normal", "flame", "ice", "strongflame"])
         return self.create(etype)

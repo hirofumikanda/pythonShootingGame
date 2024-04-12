@@ -90,7 +90,8 @@ class GameManager(Subject):
                     self._bullets.remove(b)
                     e.hp -= 50
                     if e.hp <= 0:
-                        self.notify("score")
+                        for i in range(e.score):
+                            self.notify("score")
                         b = enemy.BombEffect(e.rect, self._effects)
                         sound.SoundManager.get_instance().playblast()
                         self._effects.append(b)

@@ -13,6 +13,7 @@ class Enemy():
         self._hp = 100
         self._is_alive = True
         self._attack = 50
+        self._score = 1
 
     @property
     def is_alive(self):
@@ -41,6 +42,9 @@ class Enemy():
     @property
     def attack(self):
         return self._attack
+    @property
+    def score(self):
+        return self._score
 
     def update(self):
         if self._rect.x < 0 or self._rect.x > 550:
@@ -93,6 +97,21 @@ class StrongFlameEnemy(Enemy):
         self._vy = random.uniform(5, 7)
         self._attack = 100
 
+'''
+ドラゴン
+落下速度
+'''
+class DragonEnemy(Enemy):
+    def __init__(self):
+        super().__init__()
+        self._image = pg.image.load("images/enemy5.png")
+        self._vx = random.uniform(-2, 2)
+        self._vy = random.uniform(5, 7)
+        self._attack = 150
+        self._maxhp = 150
+        self._hp = 150
+        self._score = 2
+
 class BombEffect():
     def __init__(self, rect, effects):
         self._images = [
@@ -127,8 +146,10 @@ class EnemyFactory():
             return IceEnemy()
         if etype == "strongflame":
             return StrongFlameEnemy()
+        if etype == "dragon":
+            return DragonEnemy()
         return Enemy()
     
     def random_create(self): # ランダムに作る
-        etype = random.choice(["normal", "flame", "ice", "strongflame"])
+        etype = random.choice(["normal", "flame", "ice", "strongflame", "dragon"])
         return self.create(etype)

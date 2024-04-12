@@ -32,10 +32,14 @@ class GameManager(Subject):
     @property
     def is_cleared(self):
         return self._is_cleared
+    @property
+    def is_started(self):
+        return self._is_started
     
     def reset(self): # ゲームのリセット
-        self._is_playing = True
+        self._is_playing = False
         self._is_cleared = False
+        self._is_started = False
         self._player.reset()
         self._enemies.clear()
         self._items.clear()
@@ -44,7 +48,6 @@ class GameManager(Subject):
         self._bullets.clear()
         self._bullet_count = 0
         self._status.reset()
-        sound.SoundManager.get_instance().bgmstart()
         for i in range(2):
             self._enemies.append(enemy.Enemy())
         for i in range(1):
@@ -149,3 +152,8 @@ class GameManager(Subject):
         for i in self._items:
             i.draw(screen)
         self._status.draw(screen)
+    
+    def start(self):
+        self._is_playing = True
+        self._is_started = True
+        sound.SoundManager.get_instance().bgmstart()

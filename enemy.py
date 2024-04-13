@@ -1,5 +1,5 @@
 import pygame as pg
-import random
+import random, const
 
 '''
 ノーマルモンスター（他のモンスターのスーパークラス）
@@ -190,15 +190,24 @@ class EnemyFactory():
     '''
     ランダム生成
     '''
-    def random_create(self):
+    def random_create(self, level):
         etypeArray = []
-        for i in range(4):
-            etypeArray.append("normal")
-        for i in range(2):
+        if level == const.Constants().get_instance().EASY:
+            for i in range(4):
+                etypeArray.append("normal")
+            for i in range(1):
+                etypeArray.append("flame")
+                etypeArray.append("ice")
+        if level == const.Constants().get_instance().NORMAL:
+            for i in range(2):
+                etypeArray.append("flame")
+                etypeArray.append("ice")
+            etypeArray.append("strongflame")
+        if level == const.Constants().get_instance().HARD:
             etypeArray.append("flame")
             etypeArray.append("ice")
-            etypeArray.append("strongflame")
-        for i in range(1):
-            etypeArray.append("dragon")
+            for i in range(2):
+                etypeArray.append("strongflame")
+                etypeArray.append("dragon")
         etype = random.choice(etypeArray)
         return self.create(etype)

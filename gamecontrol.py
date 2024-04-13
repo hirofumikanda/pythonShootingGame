@@ -90,13 +90,13 @@ class GameManager(Subject):
 
         # 一定間隔で敵キャラを増やす
         self._spawn_count += 1
-        if self._spawn_count > 15:
+        if self._spawn_count > const.Constants().get_instance().ENEMYINTERVAl(self._level):
             self._spawn_count = 0
-            self._enemies.append(self._enemyfactory.random_create())
+            self._enemies.append(self._enemyfactory.random_create(self._level))
         
         # 一定間隔でアイテムを増やす
         self._spawn_count_items += 1
-        if self._spawn_count_items > 150:
+        if self._spawn_count_items > const.Constants().get_instance().ITEMINTERVAL(self._level):
             self._spawn_count_items = 0
             self._items.append(self._itemfactory.random_create())
 
@@ -115,7 +115,7 @@ class GameManager(Subject):
                         sound.SoundManager.get_instance().playblast()
                         self._effects.append(b)
                         self._enemies.remove(e)
-                        if self._status.score >= 30: # クリア条件
+                        if self._status.score >= const.Constants().get_instance().CLEARNUMBER(self._level): # クリア条件
                             self._is_playing = False
                             self._is_cleared = True
                             logging.info(f"{self._status.getLevelDescription()}-CLEAR:{self._status.distance}")

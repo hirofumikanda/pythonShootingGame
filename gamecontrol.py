@@ -36,7 +36,10 @@ class GameManager(Subject):
     def is_started(self):
         return self._is_started
     
-    def reset(self): # ゲームのリセット
+    '''
+    初期表示又はゲーム終了からスタート画面に戻るときの初期化処理
+    '''
+    def reset(self):
         self._is_playing = False
         self._is_cleared = False
         self._is_started = False
@@ -55,27 +58,39 @@ class GameManager(Subject):
         for i in range(1):
             self._enemies.append(enemy.IceEnemy())
 
-    def update(self): # 更新処理
+    '''
+    更新処理
+    '''
+    def update(self):
+        # 距離表示更新
         self.notify("distance")
+
+        # aキーが押されていた場合は一定間隔で弾丸追加
         self._bullet_count += 1
         if self._bullet_count > 10:
             key = pg.key.get_pressed()
             if key[pg.K_a]:
                 self._bullets.append(bullet.Bullet(self._player.rect))
                 self._bullet_count = 0
+        
+        # エフェクト処理更新（敵と弾丸衝突時の爆発エフェクト）
         for e in self._effects:
             e.update()
+        
+        # 弾丸移動
         for b in self._bullets:
             b.update()
+
+        # プレイヤー移動
         self._player.update()
 
-        # 敵キャラを増やす
+        # 一定間隔で敵キャラを増やす
         self._spawn_count += 1
-        if self._spawn_count > 15: # 敵発生量
+        if self._spawn_count > 15:
             self._spawn_count = 0
             self._enemies.append(self._enemyfactory.random_create())
         
-        # アイテムを増やす
+        # 一定間隔でアイテムを増やす
         self._spawn_count_items += 1
         if self._spawn_count_items > 150:
             self._spawn_count_items = 0
@@ -102,14 +117,14 @@ class GameManager(Subject):
                             sound.SoundManager.get_instance().bgmstop()
                             sound.SoundManager.get_instance().playclear()
 
-            # 敵を倒したら削除
+            # 敵が下に落ちていたら削除
             if e.is_alive == False:
                 self._enemies.remove(e)
                 break
 
             e.update()
 
-            # 敵が下に落ちたら停止
+            # 敵が下に落ちたら削除
             if e.rect.y >= 650:
                 self._enemies.remove(e)
 
@@ -133,7 +148,7 @@ class GameManager(Subject):
             if i.rect.y >= 650:
                 self._items.remove(i)
             
-            # アイテムと主人公が衝突した時の主人公のダメージ処理
+            # アイテムと主人公が衝突した時のアイテム効果処理
             if i in self._items:
                 if i.rect.colliderect(self._player.rect):
                     sound.SoundManager.get_instance().plyarecoversmall()
@@ -142,7 +157,10 @@ class GameManager(Subject):
                     if self._player.hp >= self._player.maxhp:
                         self._player.hp = self._player.maxhp
 
-    def draw(self, screen): # 描画処理
+    '''
+    描画処理
+    '''
+    def draw(self, screen):
         for b in self._bullets:
             b.draw(screen)
         for e in self._effects:
@@ -154,6 +172,9 @@ class GameManager(Subject):
             i.draw(screen)
         self._status.draw(screen)
     
+    '''
+    ゲームスタート時の処理
+    '''
     def start(self):
         self._is_playing = True
         self._is_started = True

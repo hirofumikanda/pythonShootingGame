@@ -1,22 +1,31 @@
 import pygame as pg
 
+'''
+プレイヤー状態のスーパークラス
+'''
 class PlayerState():
     def __init__(self, player):
         self._player = player
         self._image = None
     
-    def update(self): # 更新処理
+    def update(self):
         pass
 
     @property
     def image(self):
         return self._image
 
+'''
+待機状態
+'''
 class IdleState(PlayerState):
     def __init__(self, player):
         super().__init__(player)
         self._image = pg.image.load("images/kaeru1.png")
     
+    '''
+    更新処理
+    '''
     def update(self):
         key = pg.key.get_pressed()
         if key[pg.K_LEFT] or key[pg.K_RIGHT]:
@@ -24,6 +33,9 @@ class IdleState(PlayerState):
         else:
             return self
 
+'''
+移動時
+'''
 class MovingState(PlayerState):
     def __init__(self, player):
         super().__init__(player)
@@ -36,6 +48,9 @@ class MovingState(PlayerState):
         self._cnt = 0
         self._image = self._images[0]
     
+    '''
+    更新処理
+    '''
     def update(self):
         self._cnt += 1
         self._image = self._images[self._cnt // 5 % 4]
@@ -45,6 +60,9 @@ class MovingState(PlayerState):
         else:
             return self
 
+'''
+ダメージ時
+'''
 class DamageState(PlayerState):
     def __init__(self, player):
         super().__init__(player)
@@ -56,6 +74,9 @@ class DamageState(PlayerState):
         self._image = self._images[0]
         self._timeout = 20
     
+    '''
+    更新処理
+    '''
     def update(self):
         self._cnt += 1
         self._image = self._images[self._cnt // 5 % 2]
@@ -66,6 +87,9 @@ class DamageState(PlayerState):
         else:
             return self
 
+'''
+プレイヤークラス
+'''
 class Player():
     def __init__(self):
         self.reset()
@@ -77,6 +101,9 @@ class Player():
     def rect(self, value):
         self._rect = value
 
+    '''
+    初期設定
+    '''
     def reset(self):
         self._state = IdleState(self)
         self._rect = pg.Rect(250, 550, 50, 50)
@@ -94,7 +121,10 @@ class Player():
     def hp(self, value):
         self._hp = value
 
-    def update(self): # 更新処理
+    '''
+    更新処理
+    '''
+    def update(self):
         self._state = self._state.update()
         key = pg.key.get_pressed()
         vx = 0
@@ -106,7 +136,10 @@ class Player():
             vx = 0
         self._rect.x += vx
     
-    def draw(self, screen): # 描画処理
+    '''
+    描画処理
+    '''
+    def draw(self, screen):
         screen.blit(self._state.image, self._rect)
         # hpbar
         rect1 = pg.Rect(self._rect.x, self._rect.y - 20, 4, 20)
@@ -115,5 +148,8 @@ class Player():
         pg.draw.rect(screen, pg.Color("RED"), rect1)
         pg.draw.rect(screen, pg.Color("GREEN"), rect2)
     
+    '''
+    ダメージ処理
+    '''
     def damage(self):
         self._state = DamageState(self)

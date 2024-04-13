@@ -1,6 +1,13 @@
 import pygame as pg
 import random
 
+'''
+ノーマルモンスター（他のモンスターのスーパークラス）
+最大HP：100
+攻撃：50
+落下速度：1-4
+撃墜スコア：1
+'''
 class Enemy():
     def __init__(self):
         x = random.randint(100, 500)
@@ -46,6 +53,9 @@ class Enemy():
     def score(self):
         return self._score
 
+    '''
+    更新処理
+    '''
     def update(self):
         if self._rect.x < 0 or self._rect.x > 550:
             self._vx = -self._vx
@@ -54,7 +64,10 @@ class Enemy():
         if self._rect.y > 650:
             self._is_alive = False
     
-    def draw(self, screen): # 描画処理
+    '''
+    描画処理
+    '''
+    def draw(self, screen):
         screen.blit(self._image, self._rect)
         # hpbar
         rect1 = pg.Rect(self._rect.x, self._rect.y - 20, 4, 20)
@@ -65,7 +78,10 @@ class Enemy():
 
 '''
 炎のモンスター
-落下速度が速い
+最大HP：100
+攻撃：50
+落下速度：5-7
+撃墜スコア：1
 '''
 class FlameEnemy(Enemy):
     def __init__(self):
@@ -76,7 +92,10 @@ class FlameEnemy(Enemy):
 
 '''
 氷のモンスター
-最大HPが多い
+最大HP：150
+攻撃：50
+落下速度：1-4
+撃墜スコア：1
 '''
 class IceEnemy(Enemy):
     def __init__(self):
@@ -87,7 +106,10 @@ class IceEnemy(Enemy):
 
 '''
 炎のモンスター２
-落下速度が速くダメージ量も多い
+最大HP：100
+攻撃：100
+落下速度：5-7
+撃墜スコア：1
 '''
 class StrongFlameEnemy(Enemy):
     def __init__(self):
@@ -99,7 +121,10 @@ class StrongFlameEnemy(Enemy):
 
 '''
 ドラゴン
-落下速度
+最大HP：150
+攻撃：150
+落下速度：5-7
+撃墜スコア：2
 '''
 class DragonEnemy(Enemy):
     def __init__(self):
@@ -112,6 +137,9 @@ class DragonEnemy(Enemy):
         self._hp = 150
         self._score = 2
 
+'''
+弾丸との衝突時の爆発エフェクト
+'''
 class BombEffect():
     def __init__(self, rect, effects):
         self._images = [
@@ -127,7 +155,10 @@ class BombEffect():
         self._rect = rect
         self._cnt = 0
     
-    def update(self): # 更新処理
+    '''
+    更新処理
+    '''
+    def update(self):
         self._cnt += 1
         idx = self._cnt
         if idx <= 5:
@@ -135,11 +166,17 @@ class BombEffect():
         else:
             self._effects.remove(self)
     
-    def draw(self, screen): # 描画処理
+    '''
+    描画処理
+    '''
+    def draw(self, screen):
         screen.blit(self._image, self._rect)
 
+'''
+敵キャラファクトリークラス
+'''
 class EnemyFactory():
-    def create(self, etype): # タイプ指定で作る
+    def create(self, etype):
         if etype == "flame":
             return FlameEnemy()
         if etype == "ice":
@@ -150,6 +187,9 @@ class EnemyFactory():
             return DragonEnemy()
         return Enemy()
     
-    def random_create(self): # ランダムに作る
+    '''
+    ランダム生成
+    '''
+    def random_create(self):
         etype = random.choice(["normal", "flame", "ice", "strongflame", "dragon"])
         return self.create(etype)

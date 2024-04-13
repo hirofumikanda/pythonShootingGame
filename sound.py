@@ -1,6 +1,9 @@
 import pygame as pg
 import random
 
+'''
+サウンドマネージャークラス
+'''
 class SoundManager():
     _instance = None
 
@@ -21,19 +24,34 @@ class SoundManager():
         self._bomb = pg.mixer.Sound("sounds/bomb.wav")
         self._recover1 = pg.mixer.Sound("sounds/recover1.mp3")
     
-    def bgmstart(self): # BGM再生
+    '''
+    BGM再生
+    '''
+    def bgmstart(self):
         pg.mixer.music.play(-1)
     
-    def bgmstop(self): # BGM停止
+    '''
+    BGM停止
+    '''
+    def bgmstop(self):
         pg.mixer.music.stop()
-    
-    def playover(self): # ゲームオーバー音
+
+    '''
+    ゲームオーバー音
+    '''    
+    def playover(self):
         self._over.play()
     
-    def playclear(self): # ゲームクリア音
+    '''
+    ゲームクリア音
+    '''
+    def playclear(self):
         self._clear.play()
     
-    def playattack(self): # 攻撃音
+    '''
+    主人公攻撃音
+    '''
+    def playattack(self):
         r = random.randint(0, 3)
         if r == 0:
             self._clap1.play()
@@ -42,11 +60,20 @@ class SoundManager():
         else:
             self._clap3.play()
     
-    def playblast(self): # 敵破壊音
+    '''
+    敵破壊音
+    '''
+    def playblast(self):
         self._blast.play()
     
-    def playbomb(self): # 自機爆発音
+    '''
+    主人公爆発音
+    '''
+    def playbomb(self):
         self._bomb.play()
     
-    def plyarecoversmall(self): # 回復音（小）
+    '''
+    ポーション回復音
+    '''
+    def plyarecoversmall(self):
         self._recover1.play()

@@ -17,10 +17,16 @@ class Bullet():
     def rect(self, value):
         self._rect = value
     
+    '''
+    更新処理
+    '''
     def update(self):
         self._rect.y += self._vy
         if self._rect.y < -100:
             self._is_alive = False
     
+    '''
+    描画処理
+    '''
     def draw(self, screen):
         screen.blit(self._image, self._rect)

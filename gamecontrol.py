@@ -16,7 +16,7 @@ class GameManager(Subject):
     def __init__(self):
         super().__init__()
         # ロギング設定
-        logging.basicConfig(level=logging.DEBUG, filename="clearResults.log")
+        logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s", filename="clearResults.log")
         
         self._player = player.Player()
         self._enemies = []
@@ -115,11 +115,10 @@ class GameManager(Subject):
                         sound.SoundManager.get_instance().playblast()
                         self._effects.append(b)
                         self._enemies.remove(e)
-                        # logging.debug(f"スコア数：{self._status.score}")
                         if self._status.score >= 30: # クリア条件
                             self._is_playing = False
                             self._is_cleared = True
-                            logging.info(f"{self._status.getLevelDescription()}-distance:{self._status.distance}")
+                            logging.info(f"{self._status.getLevelDescription()}-CLEAR:{self._status.distance}")
                             sound.SoundManager.get_instance().bgmstop()
                             sound.SoundManager.get_instance().playclear()
 

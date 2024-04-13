@@ -191,5 +191,14 @@ class EnemyFactory():
     ランダム生成
     '''
     def random_create(self):
-        etype = random.choice(["normal", "flame", "ice", "strongflame", "dragon"])
+        etypeArray = []
+        for i in range(4):
+            etypeArray.append("normal")
+        for i in range(2):
+            etypeArray.append("flame")
+            etypeArray.append("ice")
+            etypeArray.append("strongflame")
+        for i in range(1):
+            etypeArray.append("dragon")
+        etype = random.choice(etypeArray)
         return self.create(etype)

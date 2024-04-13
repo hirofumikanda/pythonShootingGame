@@ -1,4 +1,5 @@
 import pygame as pg
+import const
 
 '''
 オブザーバースーパークラス
@@ -18,6 +19,10 @@ class Status(Observer):
     @property
     def score(self):
         return self._score
+    
+    @property
+    def distance(self):
+        return self._distance
 
     '''
     初期化処理
@@ -26,6 +31,7 @@ class Status(Observer):
         self._font = pg.font.Font(None, 32)
         self._distance = 0
         self._score = 0
+        self._level = const.Constants().get_instance().EASY
     
     '''
     更新処理
@@ -35,6 +41,8 @@ class Status(Observer):
             self._distance += 2
         if ntype == "score":
             self._score += 1
+        if ntype == "level":
+            self._level += 1
     
     '''
     描画処理
@@ -42,7 +50,21 @@ class Status(Observer):
     def draw(self, screen):
         pg.draw.rect(self._board, (0, 0, 0, 128), pg.Rect(0, 0, 800, 36))
         screen.blit(self._board, (0, 0))
+
         info1 = self._font.render(f"DISTANCE : {self._distance}", True, pg.Color("WHITE"))
-        info2 = self._font.render(f"SCORE : {self._score}", True, pg.Color("WHITE"))
         screen.blit(info1, (20, 10))
-        screen.blit(info2, (450, 10))
+        
+        levelDisp = self.getLevelDescription()
+        info2 = self._font.render(f"LEVEL : {levelDisp}", True, pg.Color("WHITE"))
+        screen.blit(info2, (230, 10))
+
+        info3 = self._font.render(f"SCORE : {self._score}", True, pg.Color("WHITE"))
+        screen.blit(info3, (450, 10))
+    
+    def getLevelDescription(self):
+        if self._level == const.Constants().get_instance().EASY:
+            return "EASY"
+        if self._level == const.Constants().get_instance().NORMAL:
+            return "NORMAL"
+        if self._level == const.Constants().get_instance().HARD:
+            return "HARD"

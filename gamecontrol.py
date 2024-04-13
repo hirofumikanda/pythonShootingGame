@@ -1,5 +1,5 @@
 import pygame as pg
-import player, enemy, bullet, status, sound, item
+import player, enemy, bullet, status, sound, item, const, logging
 
 class Subject:
     def __init__(self):
@@ -15,6 +15,9 @@ class Subject:
 class GameManager(Subject):
     def __init__(self):
         super().__init__()
+        # ロギング設定
+        logging.basicConfig(level=logging.DEBUG, filename="clearResults.log")
+        
         self._player = player.Player()
         self._enemies = []
         self._items = []
@@ -43,6 +46,7 @@ class GameManager(Subject):
         self._is_playing = False
         self._is_cleared = False
         self._is_started = False
+        self._level = const.Constants().get_instance().EASY
         self._player.reset()
         self._enemies.clear()
         self._items.clear()
@@ -111,9 +115,11 @@ class GameManager(Subject):
                         sound.SoundManager.get_instance().playblast()
                         self._effects.append(b)
                         self._enemies.remove(e)
-                        if self._status.score == 30: # クリア条件
+                        # logging.debug(f"スコア数：{self._status.score}")
+                        if self._status.score >= 30: # クリア条件
                             self._is_playing = False
                             self._is_cleared = True
+                            logging.info(f"{self._status.getLevelDescription()}-distance:{self._status.distance}")
                             sound.SoundManager.get_instance().bgmstop()
                             sound.SoundManager.get_instance().playclear()
 
@@ -175,7 +181,13 @@ class GameManager(Subject):
     '''
     ゲームスタート時の処理
     '''
-    def start(self):
+    def start(self, level):
         self._is_playing = True
         self._is_started = True
+        self._level = level
+        if self._level == const.Constants().get_instance().NORMAL:
+            self.notify("level")
+        if self._level == const.Constants().get_instance().HARD:
+            self.notify("level")
+            self.notify("level")
         sound.SoundManager.get_instance().bgmstart()

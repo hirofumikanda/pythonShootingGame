@@ -1,5 +1,5 @@
 import pygame as pg
-import random
+import random, sound
 
 '''
 アイテムのスーパークラス
@@ -21,6 +21,9 @@ class Item():
     @property
     def hpRecovery(self):
         return self._hpRecovery
+    
+    def playSound(self):
+        pass
     
     '''
     更新処理
@@ -47,6 +50,9 @@ class SmallRecoveryItem(Item):
         super().__init__()
         self._image = pg.image.load("images/portion.png")
         self._hpRecovery = 50
+    
+    def playSound(self):
+        sound.SoundManager.get_instance().plyarecoversmall()
 
 '''
 おにぎり（中回復アイテム）
@@ -59,6 +65,9 @@ class MediumRecoveryItem(Item):
         self._image = pg.image.load("images/onigiri.png")
         self._hpRecovery = 100
         self._vy = random.uniform(5, 7)
+    
+    def playSound(self):
+        sound.SoundManager.get_instance().plyarecovermedium()
 
 '''
 ドーナッツ（大回復アイテム）
@@ -71,6 +80,9 @@ class LargeRecoveryItem(Item):
         self._image = pg.image.load("images/donuts.png")
         self._hpRecovery = 150
         self._vy = random.uniform(8, 10)
+
+    def playSound(self):
+        sound.SoundManager.get_instance().plyarecoverlarge()
 
 '''
 アイテムファクトリークラス

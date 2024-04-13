@@ -23,6 +23,8 @@ class SoundManager():
         self._blast = pg.mixer.Sound("sounds/blast.wav")
         self._bomb = pg.mixer.Sound("sounds/bomb.wav")
         self._recover1 = pg.mixer.Sound("sounds/recover1.mp3")
+        self._recover2 = pg.mixer.Sound("sounds/recover2.mp3")
+        self._recover3 = pg.mixer.Sound("sounds/recover3.mp3")
     
     '''
     BGM再生
@@ -73,7 +75,19 @@ class SoundManager():
         self._bomb.play()
     
     '''
-    ポーション回復音
+    小回復音
     '''
     def plyarecoversmall(self):
         self._recover1.play()
+    
+    '''
+    中回復音
+    '''
+    def plyarecovermedium(self):
+        self._recover2.play()
+    
+    '''
+    大回復音
+    '''
+    def plyarecoverlarge(self):
+        self._recover3.play()

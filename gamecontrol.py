@@ -151,7 +151,7 @@ class GameManager(Subject):
             # アイテムと主人公が衝突した時のアイテム効果処理
             if i in self._items:
                 if i.rect.colliderect(self._player.rect):
-                    sound.SoundManager.get_instance().plyarecoversmall()
+                    i.playSound()
                     self._items.remove(i)
                     self._player.hp += i.hpRecovery
                     if self._player.hp >= self._player.maxhp:

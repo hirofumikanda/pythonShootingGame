@@ -101,5 +101,12 @@ class ItemFactory():
     ランダム生成
     '''
     def random_create(self):
-        itype = random.choice(["smallrecovery", "mediumrecovery", "largerecovery"])
+        itypeArray = []
+        for i in range(8):
+            itypeArray.append("smallrecovery")
+        for i in range(1):
+            itypeArray.append("mediumrecovery")
+        for i in range(1):
+            itypeArray.append("largerecovery")
+        itype = random.choice(itypeArray)
         return self.create(itype)

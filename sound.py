@@ -16,6 +16,7 @@ class SoundManager():
     def __init__(self):
         pg.mixer.music.load("sounds/bgm.wav")
         self._welcome = pg.mixer.Sound("sounds/welcome.mp3")
+        self._wait = pg.mixer.Sound("sounds/wait.mp3")
         self._choose = pg.mixer.Sound("sounds/choose.mp3")
         self._over = pg.mixer.Sound("sounds/over.wav")
         self._over1 = pg.mixer.Sound("sounds/over1.mp3")
@@ -115,7 +116,7 @@ class SoundManager():
     ようこそ
     '''
     def playstartannounce(self):
-        self._welcome.play()
+        self._wait.play()
         time.sleep(2)
         self._choose.play()
     

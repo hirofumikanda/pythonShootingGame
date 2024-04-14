@@ -1,5 +1,8 @@
 import pygame as pg
 
+'''
+弾丸クラス
+'''
 class Bullet():
     def __init__(self, rect):
         x = rect.x + 17
@@ -30,3 +33,15 @@ class Bullet():
     '''
     def draw(self, screen):
         screen.blit(self._image, self._rect)
+
+'''
+強化弾丸クラス
+'''
+class StrongBullet(Bullet):
+    def __init__(self, rect):
+        super().__init__(rect)
+        x = rect.x
+        y = rect.y - 30
+        self._image = pg.image.load("images/bullet_strong.png")
+        self._rect = self._image.get_rect()
+        self._rect.topleft = (x, y)

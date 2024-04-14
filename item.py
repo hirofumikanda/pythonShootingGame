@@ -13,6 +13,7 @@ class Item():
         self._vx = 0
         self._vy = random.uniform(1, 4)
         self._hpRecovery = 0
+        self._improveWeapon = False
 
     @property
     def rect(self):
@@ -22,6 +23,13 @@ class Item():
     def hpRecovery(self):
         return self._hpRecovery
     
+    @property
+    def improveWeapon(self):
+        return self._improveWeapon
+    
+    '''
+    SE再生
+    '''
     def playSound(self):
         pass
     
@@ -52,7 +60,7 @@ class SmallRecoveryItem(Item):
         self._hpRecovery = 50
     
     def playSound(self):
-        sound.SoundManager.get_instance().plyarecoversmall()
+        sound.SoundManager.get_instance().playrecoversmall()
 
 '''
 おにぎり（中回復アイテム）
@@ -67,7 +75,7 @@ class MediumRecoveryItem(Item):
         self._vy = random.uniform(5, 7)
     
     def playSound(self):
-        sound.SoundManager.get_instance().plyarecovermedium()
+        sound.SoundManager.get_instance().playrecovermedium()
 
 '''
 ドーナッツ（大回復アイテム）
@@ -82,8 +90,24 @@ class LargeRecoveryItem(Item):
         self._vy = random.uniform(8, 10)
 
     def playSound(self):
-        sound.SoundManager.get_instance().plyarecoverlarge()
+        sound.SoundManager.get_instance().playrecoverlarge()
 
+'''
+武器（武器強化アイテム）
+回復量：0
+武器強化フラグ：True
+落下速度：8-10
+'''
+class StrongWeaponItem(Item):
+    def __init__(self):
+        super().__init__()
+        self._image = pg.image.load("images/weapon.png")
+        self._improveWeapon = True
+        self._vy = random.uniform(8, 10)
+    
+    def playSound(self):
+        sound.SoundManager.get_instance().playimprove()
+        
 '''
 アイテムファクトリークラス
 '''
@@ -95,6 +119,8 @@ class ItemFactory():
             return MediumRecoveryItem()
         if itype == "largerecovery":
             return LargeRecoveryItem()
+        if itype == "strongweapon":
+            return StrongWeaponItem()
         return Item()
     
     '''
@@ -108,5 +134,7 @@ class ItemFactory():
             itypeArray.append("mediumrecovery")
         for i in range(1):
             itypeArray.append("largerecovery")
+        for i in range(1):
+            itypeArray.append("strongweapon")
         itype = random.choice(itypeArray)
         return self.create(itype)

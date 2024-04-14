@@ -88,10 +88,10 @@ class Constants:
         return 30
     @property
     def CLEARNUMBER_NORMAL(self):
-        return 30
+        return 50
     @property
     def CLEARNUMBER_HARD(self):
-        return 30
+        return 80
     def CLEARNUMBER(self, level):
         if level == self.EASY:
             return self.CLEARNUMBER_EASY

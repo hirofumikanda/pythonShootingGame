@@ -54,6 +54,7 @@ class GameManager(Subject):
         self._spawn_count_items = 0
         self._bullets.clear()
         self._bullet_count = 0
+        self._is_strong_bullet = False
         self._status.reset()
         for i in range(2):
             self._enemies.append(enemy.Enemy())
@@ -76,7 +77,10 @@ class GameManager(Subject):
         if self._bullet_count > 10:
             key = pg.key.get_pressed()
             if key[pg.K_a]:
-                self._bullets.append(bullet.Bullet(self._player.rect))
+                if self._is_strong_bullet == True:
+                    self._bullets.append(bullet.StrongBullet(self._player.rect))
+                else:
+                    self._bullets.append(bullet.Bullet(self._player.rect))
                 self._bullet_count = 0
         
         # エフェクト処理更新（敵と弾丸衝突時の爆発エフェクト）
@@ -170,6 +174,8 @@ class GameManager(Subject):
                     self._player.hp += i.hpRecovery
                     if self._player.hp >= self._player.maxhp:
                         self._player.hp = self._player.maxhp
+                    if i.improveWeapon == True:
+                        self._is_strong_bullet = True
 
     '''
     描画処理

@@ -35,6 +35,7 @@ class SoundManager():
         self._encourage1 = pg.mixer.Sound("sounds/encourage1.mp3")
         self._encourage2 = pg.mixer.Sound("sounds/encourage2.mp3")
         self._encourage3 = pg.mixer.Sound("sounds/encourage3.mp3")
+        self._improve = pg.mixer.Sound("sounds/improve.mp3")
     
     '''
     BGM再生
@@ -89,21 +90,27 @@ class SoundManager():
     '''
     小回復音
     '''
-    def plyarecoversmall(self):
+    def playrecoversmall(self):
         self._recover1.play()
     
     '''
     中回復音
     '''
-    def plyarecovermedium(self):
+    def playrecovermedium(self):
         self._recover2.play()
     
     '''
     大回復音
     '''
-    def plyarecoverlarge(self):
+    def playrecoverlarge(self):
         self._recover3.play()
     
+    '''
+    武器強化音
+    '''
+    def playimprove(self):
+        self._improve.play()
+
     '''
     ようこそ
     '''

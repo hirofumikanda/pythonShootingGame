@@ -25,7 +25,7 @@ class GameManager(Subject):
         self._bullets = []
         self._enemyfactory = enemy.EnemyFactory()
         self._itemfactory = item.ItemFactory()
-        self._status = status.Status()
+        self._status = status.Status.get_instance()
         self.attach(self._status)
         self.reset()
     
@@ -153,8 +153,11 @@ class GameManager(Subject):
                     self._enemies.remove(e)
                     self._player.damage()
                     self._player.hp -= e.attack
+
+                    # ゲームオーバー処理
                     if self._player.hp <= 0:
                         self._is_playing = False
+                        logging.info(f"Level:{self._status.getLevelDescription()} - Distance:{self._status.distance} - Score:{self._status.score}")
                         sound.SoundManager.get_instance().bgmstop()
                         sound.SoundManager.get_instance().playover()
         

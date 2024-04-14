@@ -1,4 +1,5 @@
 import pygame as pg
+import status, resultstore
 
 '''
 結果表示
@@ -31,6 +32,16 @@ class ResultScene():
             if self._game.is_cleared == True:
                 screen.blit(self._gameclear, (50, 200))
                 screen.blit(self._great, (237, 350))
+                index = 0
+                fontB = pg.font.Font(None, 40)
+                bestscoresStr = fontB.render("Best Scores", True, pg.Color("WHITE"))
+                screen.blit(bestscoresStr, (400, 350))
+                scores = resultstore.ResultStore.get_instance().readResultFile(status.Status.get_instance().level)
+                for score in scores:
+                    index += 1
+                    fontA = pg.font.Font(None, 30)
+                    scoreDescription = fontA.render(f"{index} : {score[:-1]}", True, pg.Color("WHITE"))
+                    screen.blit(scoreDescription, (400, 400 + 30 * (index - 1)))
             # ゲームオーバー時
             else:
                 screen.blit(self._gameover, (50, 200))

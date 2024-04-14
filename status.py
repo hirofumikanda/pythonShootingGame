@@ -12,6 +12,14 @@ class Observer:
 ゲームステータスクラス
 '''
 class Status(Observer):
+    _instance = None
+
+    @classmethod
+    def get_instance(cls):
+        if cls._instance is None:
+            cls._instance = cls()
+        return cls._instance
+    
     def __init__(self):
         self.reset()
         self._board = pg.Surface((800, 36), pg.SRCALPHA)
@@ -23,6 +31,10 @@ class Status(Observer):
     @property
     def distance(self):
         return self._distance
+    
+    @property
+    def level(self):
+        return self._level
 
     '''
     初期化処理

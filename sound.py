@@ -113,8 +113,15 @@ class SoundManager():
         self._choose.play()
     
     '''
-    応援
+    応援(途中)
     '''
     def playencourage(self):
-        encourageSound = random.choice([self._encourage1, self._encourage2, self._encourage3])
+        encourageSound = random.choice([self._encourage1, self._encourage2])
+        encourageSound.play()
+    
+    '''
+    応援（ラストスパート）
+    '''
+    def playencourage_last(self):
+        encourageSound = random.choice([self._encourage3])
         encourageSound.play()

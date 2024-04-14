@@ -1,5 +1,5 @@
 import pygame as pg
-import player, enemy, bullet, status, sound, item, const, logging
+import player, enemy, bullet, status, sound, item, const, logging, resultstore
 
 class Subject:
     def __init__(self):
@@ -16,7 +16,7 @@ class GameManager(Subject):
     def __init__(self):
         super().__init__()
         # ロギング設定
-        logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s", filename="clearResults.log")
+        logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s", filename="play.log")
         
         self._player = player.Player()
         self._enemies = []
@@ -115,6 +115,8 @@ class GameManager(Subject):
                             self.notify("score")
                             if self._status.score % 10 == 0 and self._status.score != const.Constants.get_instance().CLEARNUMBER(self._level):
                                 sound.SoundManager.get_instance().playencourage()
+                            if self._status.score == const.Constants.get_instance().CLEARNUMBER(self._level) - 5:
+                                sound.SoundManager.get_instance().playencourage_last()
                         b = enemy.BombEffect(e.rect, self._effects)
                         sound.SoundManager.get_instance().playblast()
                         self._effects.append(b)
@@ -127,6 +129,7 @@ class GameManager(Subject):
                             logging.info(f"{self._status.getLevelDescription()}:{self._status.distance}")
                             sound.SoundManager.get_instance().bgmstop()
                             sound.SoundManager.get_instance().playclear()
+                            resultstore.ResultStore.get_instance().appendToResultFile(self._level, self._status.distance)
 
             # 敵が下に落ちていたら削除
             if e.is_alive == False:

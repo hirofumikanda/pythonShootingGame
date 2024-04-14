@@ -1,5 +1,5 @@
 import pygame as pg
-import random, sound
+import random, sound, const
 
 '''
 アイテムのスーパークラス
@@ -126,15 +126,11 @@ class ItemFactory():
     '''
     ランダム生成
     '''
-    def random_create(self):
+    def random_create(self, level):
         itypeArray = []
-        for i in range(8):
-            itypeArray.append("smallrecovery")
-        for i in range(1):
-            itypeArray.append("mediumrecovery")
-        for i in range(1):
-            itypeArray.append("largerecovery")
-        for i in range(1):
-            itypeArray.append("strongweapon")
+        itypeDict = const.Constants.get_instance().ITEMTYPE(level)
+        for key, value in itypeDict.items():
+            for i in range(value):
+                itypeArray.append(key)
         itype = random.choice(itypeArray)
         return self.create(itype)

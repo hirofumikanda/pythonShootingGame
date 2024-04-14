@@ -81,6 +81,26 @@ class Constants:
             return self.ITEMINTERVAL_HARD
     
     '''
+    アイテム出現比率
+    '''
+    @property
+    def ITEMTYPE_EASY(self):
+        return {'smallrecovery': 4, 'mediumrecovery': 1, 'strongweapon': 1}
+    @property
+    def ITEMTYPE_NORMAL(self):
+        return {'smallrecovery': 2, 'mediumrecovery': 2, 'strongweapon': 1}
+    @property
+    def ITEMTYPE_HARD(self):
+        return {'smallrecovery': 1, 'mediumrecovery': 2, 'strongweapon': 2}
+    def ITEMTYPE(self, level):
+        if level == self.EASY:
+            return self.ITEMTYPE_EASY
+        if level == self.NORMAL:
+            return self.ITEMTYPE_NORMAL
+        if level == self.HARD:
+            return self.ITEMTYPE_HARD
+        
+    '''
     クリア条件（撃墜数）
     '''
     @property

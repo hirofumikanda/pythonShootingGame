@@ -104,7 +104,7 @@ class GameManager(Subject):
         self._spawn_count_items += 1
         if self._spawn_count_items > const.Constants.get_instance().ITEMINTERVAL(self._level):
             self._spawn_count_items = 0
-            self._items.append(self._itemfactory.random_create())
+            self._items.append(self._itemfactory.random_create(self._level))
 
         for e in self._enemies:
             for b in self._bullets:

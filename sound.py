@@ -1,5 +1,5 @@
 import pygame as pg
-import random
+import random, time
 
 '''
 サウンドマネージャークラス
@@ -15,8 +15,15 @@ class SoundManager():
     
     def __init__(self):
         pg.mixer.music.load("sounds/bgm.wav")
+        self._welcome = pg.mixer.Sound("sounds/welcome.mp3")
+        self._choose = pg.mixer.Sound("sounds/choose.mp3")
         self._over = pg.mixer.Sound("sounds/over.wav")
+        self._over1 = pg.mixer.Sound("sounds/over1.mp3")
+        self._over2 = pg.mixer.Sound("sounds/over2.mp3")
         self._clear = pg.mixer.Sound("sounds/clear.wav")
+        self._clear1 = pg.mixer.Sound("sounds/clear1.mp3")
+        self._clear2 = pg.mixer.Sound("sounds/clear2.mp3")
+        self._clear3 = pg.mixer.Sound("sounds/clear3.mp3")
         self._clap1 = pg.mixer.Sound("sounds/clap1.wav")
         self._clap2 = pg.mixer.Sound("sounds/clap2.wav")
         self._clap3 = pg.mixer.Sound("sounds/clap3.wav")
@@ -25,6 +32,9 @@ class SoundManager():
         self._recover1 = pg.mixer.Sound("sounds/recover1.mp3")
         self._recover2 = pg.mixer.Sound("sounds/recover2.mp3")
         self._recover3 = pg.mixer.Sound("sounds/recover3.mp3")
+        self._encourage1 = pg.mixer.Sound("sounds/encourage1.mp3")
+        self._encourage2 = pg.mixer.Sound("sounds/encourage2.mp3")
+        self._encourage3 = pg.mixer.Sound("sounds/encourage3.mp3")
     
     '''
     BGM再生
@@ -42,13 +52,15 @@ class SoundManager():
     ゲームオーバー音
     '''    
     def playover(self):
-        self._over.play()
+        overSound = random.choice([self._over1, self._over2])
+        overSound.play()
     
     '''
     ゲームクリア音
     '''
     def playclear(self):
-        self._clear.play()
+        clearSound = random.choice([self._clear1, self._clear2, self._clear3])
+        clearSound.play()
     
     '''
     主人公攻撃音
@@ -91,3 +103,18 @@ class SoundManager():
     '''
     def plyarecoverlarge(self):
         self._recover3.play()
+    
+    '''
+    ようこそ
+    '''
+    def playstartannounce(self):
+        self._welcome.play()
+        time.sleep(2)
+        self._choose.play()
+    
+    '''
+    応援
+    '''
+    def playencourage(self):
+        encourageSound = random.choice([self._encourage1, self._encourage2, self._encourage3])
+        encourageSound.play()

@@ -31,7 +31,7 @@ class Status(Observer):
         self._font = pg.font.Font(None, 32)
         self._distance = 0
         self._score = 0
-        self._level = const.Constants().get_instance().EASY
+        self._level = const.Constants.get_instance().EASY
     
     '''
     更新処理
@@ -62,9 +62,9 @@ class Status(Observer):
         screen.blit(info3, (450, 10))
     
     def getLevelDescription(self):
-        if self._level == const.Constants().get_instance().EASY:
+        if self._level == const.Constants.get_instance().EASY:
             return "EASY"
-        if self._level == const.Constants().get_instance().NORMAL:
+        if self._level == const.Constants.get_instance().NORMAL:
             return "NORMAL"
-        if self._level == const.Constants().get_instance().HARD:
+        if self._level == const.Constants.get_instance().HARD:
             return "HARD"

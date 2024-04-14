@@ -26,15 +26,15 @@ class StartScene():
         if mBtnL == 1:
             # Easyボタン
             if 125 <= mouseX and mouseX <= 475 and 130 <= mouseY and mouseY <= 230:
-                self._game.start(const.Constants().get_instance().EASY)
+                self._game.start(const.Constants.get_instance().EASY)
                 return
             # Normalボタン
             if 125 <= mouseX and mouseX <= 475 and 270 <= mouseY and mouseY <= 370:
-                self._game.start(const.Constants().get_instance().NORMAL)
+                self._game.start(const.Constants.get_instance().NORMAL)
                 return
             # Hardボタン
             if 125 <= mouseX and mouseX <= 475 and 410 <= mouseY and mouseY <= 510:
-                self._game.start(const.Constants().get_instance().HARD)
+                self._game.start(const.Constants.get_instance().HARD)
                 return
     
     '''

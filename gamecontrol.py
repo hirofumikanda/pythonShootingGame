@@ -46,7 +46,7 @@ class GameManager(Subject):
         self._is_playing = False
         self._is_cleared = False
         self._is_started = False
-        self._level = const.Constants().get_instance().EASY
+        self._level = const.Constants.get_instance().EASY
         self._player.reset()
         self._enemies.clear()
         self._items.clear()
@@ -61,6 +61,8 @@ class GameManager(Subject):
             self._enemies.append(enemy.FlameEnemy())
         for i in range(1):
             self._enemies.append(enemy.IceEnemy())
+        # 案内音声再生
+        sound.SoundManager.get_instance().playstartannounce()
 
     '''
     更新処理
@@ -90,13 +92,13 @@ class GameManager(Subject):
 
         # 一定間隔で敵キャラを増やす
         self._spawn_count += 1
-        if self._spawn_count > const.Constants().get_instance().ENEMYINTERVAl(self._level):
+        if self._spawn_count > const.Constants.get_instance().ENEMYINTERVAl(self._level):
             self._spawn_count = 0
             self._enemies.append(self._enemyfactory.random_create(self._level))
         
         # 一定間隔でアイテムを増やす
         self._spawn_count_items += 1
-        if self._spawn_count_items > const.Constants().get_instance().ITEMINTERVAL(self._level):
+        if self._spawn_count_items > const.Constants.get_instance().ITEMINTERVAL(self._level):
             self._spawn_count_items = 0
             self._items.append(self._itemfactory.random_create())
 
@@ -111,11 +113,13 @@ class GameManager(Subject):
                     if e.hp <= 0:
                         for i in range(e.score):
                             self.notify("score")
+                            if self._status.score % 10 == 0 and self._status.score != const.Constants.get_instance().CLEARNUMBER(self._level):
+                                sound.SoundManager.get_instance().playencourage()
                         b = enemy.BombEffect(e.rect, self._effects)
                         sound.SoundManager.get_instance().playblast()
                         self._effects.append(b)
                         self._enemies.remove(e)
-                        if self._status.score >= const.Constants().get_instance().CLEARNUMBER(self._level): # クリア条件
+                        if self._status.score >= const.Constants.get_instance().CLEARNUMBER(self._level): # クリア条件
                             self._is_playing = False
                             self._is_cleared = True
                             logging.info(f"{self._status.getLevelDescription()}:{self._status.distance}")
@@ -184,9 +188,9 @@ class GameManager(Subject):
         self._is_playing = True
         self._is_started = True
         self._level = level
-        if self._level == const.Constants().get_instance().NORMAL:
+        if self._level == const.Constants.get_instance().NORMAL:
             self.notify("level")
-        if self._level == const.Constants().get_instance().HARD:
+        if self._level == const.Constants.get_instance().HARD:
             self.notify("level")
             self.notify("level")
         sound.SoundManager.get_instance().bgmstart()

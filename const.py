@@ -85,7 +85,7 @@ class Constants:
     '''
     @property
     def CLEARNUMBER_EASY(self):
-        return 5
+        return 30
     @property
     def CLEARNUMBER_NORMAL(self):
         return 50

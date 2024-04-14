@@ -192,7 +192,7 @@ class EnemyFactory():
     '''
     def random_create(self, level):
         etypeArray = []
-        etypeDict = const.Constants().get_instance().ENEMYTYPE(level)
+        etypeDict = const.Constants.get_instance().ENEMYTYPE(level)
         for key, value in etypeDict.items():
             for i in range(value):
                 etypeArray.append(key)

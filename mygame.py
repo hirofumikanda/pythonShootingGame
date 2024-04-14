@@ -1,6 +1,7 @@
-# 準備
 import pygame as pg, sys
 import gamecontrol, resultscene, startscene
+
+# 準備
 pg.init()
 screen = pg.display.set_mode((600, 650))
 pg.display.set_caption("Shooting Game")
@@ -24,8 +25,8 @@ while True:
 
     # 描画処理
     game.draw(screen)
-    if game.is_playing == False: # プレイ中ではない
-        if game.is_started == False: # まだゲームスタートしていない
+    if game.is_playing == False:
+        if game.is_started == False:
             start.draw(screen)
         else:
             result.draw(screen)

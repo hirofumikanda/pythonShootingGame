@@ -119,6 +119,8 @@ class GameManager(Subject):
                         sound.SoundManager.get_instance().playblast()
                         self._effects.append(b)
                         self._enemies.remove(e)
+                        
+                        # ゲームクリア処理
                         if self._status.score >= const.Constants.get_instance().CLEARNUMBER(self._level): # クリア条件
                             self._is_playing = False
                             self._is_cleared = True

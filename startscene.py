@@ -1,11 +1,14 @@
 import pygame as pg
-import const
+import const, logging
+from pygame.locals import *
 
 '''
 スタート画面
 '''
 class StartScene():
     def __init__(self, game):
+        # ロギング設定
+        logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
         # font = pg.font.Font(None, 30)
         self._game = game
         # self._msg = font.render("Press E(Easy) or N(Normal) or H(Hard) to play.", True, pg.Color("WHITE"))
@@ -18,13 +21,21 @@ class StartScene():
     更新処理
     '''
     def update(self):
-        key = pg.key.get_pressed()
-        if key[pg.K_e]:
-            self._game.start(const.Constants().get_instance().EASY)
-        if key[pg.K_n]:
-            self._game.start(const.Constants().get_instance().NORMAL)
-        if key[pg.K_h]:
-            self._game.start(const.Constants().get_instance().HARD)
+        mouseX, mouseY = pg.mouse.get_pos()
+        mBtnL, mBtnC, mBtnR = pg.mouse.get_pressed()
+        if mBtnL == 1:
+            # Easyボタン
+            if 125 <= mouseX and mouseX <= 475 and 130 <= mouseY and mouseY <= 230:
+                self._game.start(const.Constants().get_instance().EASY)
+                return
+            # Normalボタン
+            if 125 <= mouseX and mouseX <= 475 and 270 <= mouseY and mouseY <= 370:
+                self._game.start(const.Constants().get_instance().NORMAL)
+                return
+            # Hardボタン
+            if 125 <= mouseX and mouseX <= 475 and 410 <= mouseY and mouseY <= 510:
+                self._game.start(const.Constants().get_instance().HARD)
+                return
     
     '''
     描画処理

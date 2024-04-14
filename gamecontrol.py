@@ -118,7 +118,7 @@ class GameManager(Subject):
                         if self._status.score >= const.Constants().get_instance().CLEARNUMBER(self._level): # クリア条件
                             self._is_playing = False
                             self._is_cleared = True
-                            logging.info(f"{self._status.getLevelDescription()}-CLEAR:{self._status.distance}")
+                            logging.info(f"{self._status.getLevelDescription()}:{self._status.distance}")
                             sound.SoundManager.get_instance().bgmstop()
                             sound.SoundManager.get_instance().playclear()
 

@@ -9,9 +9,9 @@ class StartScene():
     def __init__(self, game):
         # ロギング設定
         logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
-        # font = pg.font.Font(None, 30)
+        font = pg.font.Font(None, 50)
         self._game = game
-        # self._msg = font.render("Press E(Easy) or N(Normal) or H(Hard) to play.", True, pg.Color("WHITE"))
+        self._msg = font.render("Choose Level to PLAY", True, pg.Color("WHITE"))
         self._gamestart = pg.image.load("images/gamestart.png")
         self._easyButton = pg.image.load("images/EasyButton.png")
         self._normalButton = pg.image.load("images/NormalButton.png")
@@ -41,7 +41,7 @@ class StartScene():
     描画処理
     '''
     def draw(self, screen):
-        # screen.blit(self._msg, (70, 380))
+        screen.blit(self._msg, (120, 60))
         if self._game.is_started == False:
             # screen.blit(self._gamestart, (50, 200))
             screen.blit(self._easyButton, (125,130))

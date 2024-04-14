@@ -8,7 +8,7 @@ class Constants:
         return cls._instance
     
     '''
-    難易度
+    難易度コード
     '''
     @property
     def EASY(self):
@@ -41,6 +41,26 @@ class Constants:
             return self.ENEMYINTERVAL_HARD
     
     '''
+    敵キャラ出現比率
+    '''
+    @property
+    def ENEMYTYPE_EASY(self):
+        return {'normal': 4, 'flame': 1, 'ice': 1}
+    @property
+    def ENEMYTYPE_NORMAL(self):
+        return {'flame': 2, 'ice': 2, 'strongflame': 1}
+    @property
+    def ENEMYTYPE_HARD(self):
+        return {'flame': 1, 'ice': 1, 'strongflame': 2, 'dragon': 2}
+    def ENEMYTYPE(self, level):
+        if level == self.EASY:
+            return self.ENEMYTYPE_EASY
+        if level == self.NORMAL:
+            return self.ENEMYTYPE_NORMAL
+        if level == self.HARD:
+            return self.ENEMYTYPE_HARD
+    
+    '''
     アイテム出現間隔
     '''
     @property
@@ -65,7 +85,7 @@ class Constants:
     '''
     @property
     def CLEARNUMBER_EASY(self):
-        return 30
+        return 5
     @property
     def CLEARNUMBER_NORMAL(self):
         return 50

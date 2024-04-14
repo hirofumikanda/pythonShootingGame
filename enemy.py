@@ -192,22 +192,9 @@ class EnemyFactory():
     '''
     def random_create(self, level):
         etypeArray = []
-        if level == const.Constants().get_instance().EASY:
-            for i in range(4):
-                etypeArray.append("normal")
-            for i in range(1):
-                etypeArray.append("flame")
-                etypeArray.append("ice")
-        if level == const.Constants().get_instance().NORMAL:
-            for i in range(2):
-                etypeArray.append("flame")
-                etypeArray.append("ice")
-            etypeArray.append("strongflame")
-        if level == const.Constants().get_instance().HARD:
-            etypeArray.append("flame")
-            etypeArray.append("ice")
-            for i in range(2):
-                etypeArray.append("strongflame")
-                etypeArray.append("dragon")
+        etypeDict = const.Constants().get_instance().ENEMYTYPE(level)
+        for key, value in etypeDict.items():
+            for i in range(value):
+                etypeArray.append(key)
         etype = random.choice(etypeArray)
         return self.create(etype)

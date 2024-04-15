@@ -111,7 +111,7 @@ class GameManager(Subject):
                 if e.rect.colliderect(b.rect):
                     sound.SoundManager.get_instance().playattack()
                     self._bullets.remove(b)
-                    e.hp -= 50
+                    e.hp -= b.attack
                     if e.hp <= 0:
                         for i in range(e.score):
                             self.notify("score")

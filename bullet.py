@@ -12,6 +12,7 @@ class Bullet():
         self._rect.topleft = (x, y)
         self._vy = -8
         self._is_alive = True
+        self._attack = 50
     
     @property
     def rect(self):
@@ -19,6 +20,9 @@ class Bullet():
     @rect.setter
     def rect(self, value):
         self._rect = value
+    @property
+    def attack(self):
+        return self._attack
     
     '''
     更新処理
@@ -46,6 +50,7 @@ class StrongBullet(Bullet):
         self._rect = self._image.get_rect()
         self._rect.topleft = (x, y)
         self._vy = -10
+        self._attack = 100
 
 '''
 最強弾丸クラス
@@ -59,6 +64,7 @@ class StrongestBullet(Bullet):
         self._rect = self._image.get_rect()
         self._rect.topleft = (x, y)
         self._vy = -16
+        self._attack = 150
 
 '''
 弾丸ファクトリークラス

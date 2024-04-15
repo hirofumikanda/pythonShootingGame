@@ -31,7 +31,7 @@ class Constants:
         return 15
     @property
     def ENEMYINTERVAL_HARD(self):
-        return 5
+        return 15
     def ENEMYINTERVAl(self, level):
         if level == self.EASY:
             return self.ENEMYINTERVAL_EASY
@@ -51,7 +51,7 @@ class Constants:
         return {'flame': 2, 'ice': 2, 'strongflame': 1}
     @property
     def ENEMYTYPE_HARD(self):
-        return {'flame': 1, 'ice': 1, 'strongflame': 2, 'dragon': 2}
+        return {'flame': 1, 'ice': 2, 'strongflame': 1, 'dragon': 1}
     def ENEMYTYPE(self, level):
         if level == self.EASY:
             return self.ENEMYTYPE_EASY
@@ -71,7 +71,7 @@ class Constants:
         return 200
     @property
     def ITEMINTERVAL_HARD(self):
-        return 300
+        return 250
     def ITEMINTERVAL(self, level):
         if level == self.EASY:
             return self.ITEMINTERVAL_EASY

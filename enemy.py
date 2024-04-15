@@ -89,6 +89,7 @@ class FlameEnemy(Enemy):
         self._image = pg.image.load("images/enemy2.png")
         self._vx = random.uniform(-2, 2)
         self._vy = random.uniform(5, 7)
+        self._score = 1
 
 '''
 氷のモンスター
@@ -103,39 +104,47 @@ class IceEnemy(Enemy):
         self._image = pg.image.load("images/enemy3.png")
         self._maxhp = 150
         self._hp = 150
+        self._score = 1
 
 '''
-炎のモンスター２
+炎のモンスターLv.2
 最大HP：100
 攻撃：100
 落下速度：5-7
-撃墜スコア：1
+撃墜スコア：3
 '''
 class StrongFlameEnemy(Enemy):
     def __init__(self):
         super().__init__()
+        x = random.randint(100, 470)
+        y = -100
         self._image = pg.image.load("images/enemy4.png")
+        self._rect = pg.Rect(x, y, 80, 80)
         self._vx = random.uniform(-2, 2)
         self._vy = random.uniform(5, 7)
         self._attack = 100
+        self._score = 3
 
 '''
 ドラゴン
 最大HP：150
-攻撃：150
+攻撃：100
 落下速度：5-7
-撃墜スコア：2
+撃墜スコア：5
 '''
 class DragonEnemy(Enemy):
     def __init__(self):
         super().__init__()
+        x = random.randint(100, 450)
+        y = -100
         self._image = pg.image.load("images/enemy5.png")
+        self._rect = pg.Rect(x, y, 100, 80)
         self._vx = random.uniform(-2, 2)
         self._vy = random.uniform(5, 7)
-        self._attack = 150
+        self._attack = 100
         self._maxhp = 150
         self._hp = 150
-        self._score = 2
+        self._score = 5
 
 '''
 弾丸との衝突時の爆発エフェクト

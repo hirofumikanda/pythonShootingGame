@@ -68,10 +68,10 @@ class Constants:
         return 150
     @property
     def ITEMINTERVAL_NORMAL(self):
-        return 200
+        return 150
     @property
     def ITEMINTERVAL_HARD(self):
-        return 250
+        return 150
     def ITEMINTERVAL(self, level):
         if level == self.EASY:
             return self.ITEMINTERVAL_EASY
@@ -88,10 +88,10 @@ class Constants:
         return {'smallrecovery': 4, 'mediumrecovery': 1, 'strongweapon': 1}
     @property
     def ITEMTYPE_NORMAL(self):
-        return {'smallrecovery': 4, 'mediumrecovery': 1, 'strongweapon': 1}
+        return {'smallrecovery': 4, 'mediumrecovery': 1, 'strongweapon': 1, 'magic': 1}
     @property
     def ITEMTYPE_HARD(self):
-        return {'smallrecovery': 4, 'mediumrecovery': 2, 'strongweapon': 2}
+        return {'smallrecovery': 4, 'mediumrecovery': 2, 'strongweapon': 2, 'magic': 2}
     def ITEMTYPE(self, level):
         if level == self.EASY:
             return self.ITEMTYPE_EASY
@@ -111,7 +111,7 @@ class Constants:
         return 50
     @property
     def CLEARNUMBER_HARD(self):
-        return 80
+        return 100
     def CLEARNUMBER(self, level):
         if level == self.EASY:
             return self.CLEARNUMBER_EASY

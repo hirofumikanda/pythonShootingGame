@@ -37,6 +37,7 @@ class SoundManager():
         self._encourage2 = pg.mixer.Sound("sounds/encourage2.mp3")
         self._encourage3 = pg.mixer.Sound("sounds/encourage3.mp3")
         self._improve = pg.mixer.Sound("sounds/improve.mp3")
+        self._magic = pg.mixer.Sound("sounds/magic.mp3")
     
     '''
     BGM再生
@@ -111,6 +112,12 @@ class SoundManager():
     '''
     def playimprove(self):
         self._improve.play()
+
+    '''
+    マジック発動
+    '''
+    def plyaMagic(self):
+        self._magic.play()
 
     '''
     ようこそ

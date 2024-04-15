@@ -178,6 +178,19 @@ class GameManager(Subject):
                     if i.improveWeapon == True:
                         if self._bullet_level < const.Constants.get_instance().MAX_BULLET_LEVEL:
                             self._bullet_level += 1
+                    if i.magicApply == True: # 敵を全滅させる
+                        sound.SoundManager.get_instance().plyaMagic()
+                        for e in self._enemies:
+                            for i in range(e.score):
+                                self.notify("score")
+                                if self._status.score % 10 == 0 and self._status.score != const.Constants.get_instance().CLEARNUMBER(self._level):
+                                    sound.SoundManager.get_instance().playencourage()
+                                if self._status.score == const.Constants.get_instance().CLEARNUMBER(self._level) - 5:
+                                    sound.SoundManager.get_instance().playencourage_last()
+                            b = enemy.BombEffect(e.rect, self._effects)
+                            sound.SoundManager.get_instance().playblast()
+                            self._effects.append(b)
+                            self._enemies.remove(e)
 
     '''
     描画処理

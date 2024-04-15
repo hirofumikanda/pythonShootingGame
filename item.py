@@ -14,6 +14,7 @@ class Item():
         self._vy = random.uniform(1, 4)
         self._hpRecovery = 0
         self._improveWeapon = False
+        self._magicApply = False
 
     @property
     def rect(self):
@@ -26,6 +27,10 @@ class Item():
     @property
     def improveWeapon(self):
         return self._improveWeapon
+    
+    @property
+    def magicApply(self):
+        return self._magicApply
     
     '''
     SE再生
@@ -107,6 +112,23 @@ class StrongWeaponItem(Item):
     
     def playSound(self):
         sound.SoundManager.get_instance().playimprove()
+
+'''
+究極マジックアイテム
+回復量：0
+武器強化フラグ：False
+マジック適用：True
+落下速度：8-10
+'''
+class MagicItem(Item):
+    def __init__(self):
+        super().__init__()
+        x = random.randint(100, 500)
+        y = -100
+        self._rect = pg.Rect(x, y, 50, 50)
+        self._image = pg.image.load("images/magic.png")
+        self._magicApply = True
+        self._vy = random.uniform(8, 10)
         
 '''
 アイテムファクトリークラス
@@ -121,6 +143,8 @@ class ItemFactory():
             return LargeRecoveryItem()
         if itype == "strongweapon":
             return StrongWeaponItem()
+        if itype == "magic":
+            return MagicItem()
         return Item()
     
     '''

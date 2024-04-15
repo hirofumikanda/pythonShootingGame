@@ -45,3 +45,30 @@ class StrongBullet(Bullet):
         self._image = pg.image.load("images/bullet_strong.png")
         self._rect = self._image.get_rect()
         self._rect.topleft = (x, y)
+        self._vy = -10
+
+'''
+最強弾丸クラス
+'''
+class StrongestBullet(Bullet):
+    def __init__(self, rect):
+        super().__init__(rect)
+        x = rect.x
+        y = rect.y - 50
+        self._image = pg.image.load("images/bullet_strongest.png")
+        self._rect = self._image.get_rect()
+        self._rect.topleft = (x, y)
+        self._vy = -16
+
+'''
+弾丸ファクトリークラス
+'''
+class BulletFactory():
+    def create(self, rect, level):
+        if level == 0:
+            return Bullet(rect)
+        if level == 1:
+            return StrongBullet(rect)
+        if level == 2:
+            return StrongestBullet(rect)
+        return Bullet()

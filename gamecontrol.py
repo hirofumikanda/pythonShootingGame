@@ -25,6 +25,7 @@ class GameManager(Subject):
         self._bullets = []
         self._enemyfactory = enemy.EnemyFactory()
         self._itemfactory = item.ItemFactory()
+        self._bulletfactory = bullet.BulletFactory()
         self._status = status.Status.get_instance()
         self.attach(self._status)
         self.reset()
@@ -54,7 +55,7 @@ class GameManager(Subject):
         self._spawn_count_items = 0
         self._bullets.clear()
         self._bullet_count = 0
-        self._is_strong_bullet = False
+        self._bullet_level = 0
         self._status.reset()
         for i in range(2):
             self._enemies.append(enemy.Enemy())
@@ -77,10 +78,7 @@ class GameManager(Subject):
         if self._bullet_count > 10:
             key = pg.key.get_pressed()
             if key[pg.K_a]:
-                if self._is_strong_bullet == True:
-                    self._bullets.append(bullet.StrongBullet(self._player.rect))
-                else:
-                    self._bullets.append(bullet.Bullet(self._player.rect))
+                self._bullets.append(self._bulletfactory.create(self._player.rect, self._bullet_level))
                 self._bullet_count = 0
         
         # エフェクト処理更新（敵と弾丸衝突時の爆発エフェクト）
@@ -178,7 +176,8 @@ class GameManager(Subject):
                     if self._player.hp >= self._player.maxhp:
                         self._player.hp = self._player.maxhp
                     if i.improveWeapon == True:
-                        self._is_strong_bullet = True
+                        if self._bullet_level < const.Constants.get_instance().MAX_BULLET_LEVEL:
+                            self._bullet_level += 1
 
     '''
     描画処理

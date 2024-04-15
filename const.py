@@ -88,10 +88,10 @@ class Constants:
         return {'smallrecovery': 4, 'mediumrecovery': 1, 'strongweapon': 1}
     @property
     def ITEMTYPE_NORMAL(self):
-        return {'smallrecovery': 2, 'mediumrecovery': 2, 'strongweapon': 1}
+        return {'smallrecovery': 4, 'mediumrecovery': 1, 'strongweapon': 1}
     @property
     def ITEMTYPE_HARD(self):
-        return {'smallrecovery': 1, 'mediumrecovery': 2, 'strongweapon': 2}
+        return {'smallrecovery': 4, 'mediumrecovery': 2, 'strongweapon': 2}
     def ITEMTYPE(self, level):
         if level == self.EASY:
             return self.ITEMTYPE_EASY
@@ -119,3 +119,10 @@ class Constants:
             return self.CLEARNUMBER_NORMAL
         if level == self.HARD:
             return self.CLEARNUMBER_HARD
+    
+    '''
+    最大武器レベル
+    '''
+    @property
+    def MAX_BULLET_LEVEL(self):
+        return 2

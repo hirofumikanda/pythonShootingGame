@@ -147,6 +147,48 @@ class DragonEnemy(Enemy):
         self._score = 5
 
 '''
+ドラゴンLv.2
+最大HP：250
+攻撃：100
+落下速度：5-7
+撃墜スコア：5
+'''
+class StrongDragonEnemy(Enemy):
+    def __init__(self):
+        super().__init__()
+        x = random.randint(100, 450)
+        y = -100
+        self._image = pg.image.load("images/enemy6.png")
+        self._rect = pg.Rect(x, y, 100, 100)
+        self._vx = random.uniform(-2, 2)
+        self._vy = random.uniform(5, 7)
+        self._attack = 100
+        self._maxhp = 250
+        self._hp = 250
+        self._score = 5
+
+'''
+デーモン
+最大HP：250
+攻撃：150
+落下速度：5-7
+撃墜スコア：5
+'''
+class DeamonEnemy(Enemy):
+    def __init__(self):
+        super().__init__()
+        x = random.randint(100, 450)
+        y = -100
+        self._image = pg.image.load("images/enemy7.png")
+        self._rect = pg.Rect(x, y, 100, 100)
+        self._vx = random.uniform(-2, 2)
+        self._vy = random.uniform(5, 7)
+        self._attack = 150
+        self._maxhp = 250
+        self._hp = 250
+        self._score = 5
+
+'''
 弾丸との衝突時の爆発エフェクト
 '''
 class BombEffect():
@@ -194,14 +236,18 @@ class EnemyFactory():
             return StrongFlameEnemy()
         if etype == "dragon":
             return DragonEnemy()
+        if etype == "strongdragon":
+            return StrongDragonEnemy()
+        if etype == "deamon":
+            return DeamonEnemy()
         return Enemy()
     
     '''
     ランダム生成
     '''
-    def random_create(self, level):
+    def random_create(self, level, stage):
         etypeArray = []
-        etypeDict = const.Constants.get_instance().ENEMYTYPE(level)
+        etypeDict = const.Constants.get_instance().ENEMYTYPE(level, stage)
         for key, value in etypeDict.items():
             for i in range(value):
                 etypeArray.append(key)

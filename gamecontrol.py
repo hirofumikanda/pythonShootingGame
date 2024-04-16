@@ -48,6 +48,7 @@ class GameManager(Subject):
         self._is_cleared = False
         self._is_started = False
         self._level = const.Constants.get_instance().EASY
+        self._stage = 1
         self._player.reset()
         self._enemies.clear()
         self._items.clear()
@@ -96,7 +97,7 @@ class GameManager(Subject):
         self._spawn_count += 1
         if self._spawn_count > const.Constants.get_instance().ENEMYINTERVAl(self._level):
             self._spawn_count = 0
-            self._enemies.append(self._enemyfactory.random_create(self._level))
+            self._enemies.append(self._enemyfactory.random_create(self._level, self._stage))
         
         # 一定間隔でアイテムを増やす
         self._spawn_count_items += 1
@@ -115,8 +116,13 @@ class GameManager(Subject):
                     if e.hp <= 0:
                         for i in range(e.score):
                             self.notify("score")
+                            # 10スコアずつ応援音声再生
                             if self._status.score % 10 == 0 and self._status.score != const.Constants.get_instance().CLEARNUMBER(self._level):
                                 sound.SoundManager.get_instance().playencourage()
+                            # 後半でステージアップ
+                            if self._status.score == int(const.Constants.get_instance().CLEARNUMBER(self._level) * 0.5):
+                                self._stage += 1
+                            # 残り5スコアであと少しの応援音声再生
                             if self._status.score == const.Constants.get_instance().CLEARNUMBER(self._level) - 5:
                                 sound.SoundManager.get_instance().playencourage_last()
                         b = enemy.BombEffect(e.rect, self._effects)

@@ -52,13 +52,18 @@ class Constants:
     @property
     def ENEMYTYPE_HARD(self):
         return {'flame': 1, 'ice': 2, 'strongflame': 1, 'dragon': 1}
-    def ENEMYTYPE(self, level):
+    @property
+    def ENEMYTYPE_HARD2(self):
+        return {'strongflame': 1, 'dragon': 1, 'strongdragon': 1, 'deamon': 1}
+    def ENEMYTYPE(self, level, stage):
         if level == self.EASY:
             return self.ENEMYTYPE_EASY
         if level == self.NORMAL:
             return self.ENEMYTYPE_NORMAL
-        if level == self.HARD:
+        if level == self.HARD and stage == 1:
             return self.ENEMYTYPE_HARD
+        if level == self.HARD and stage >= 2:
+            return self.ENEMYTYPE_HARD2
     
     '''
     アイテム出現間隔
@@ -111,7 +116,7 @@ class Constants:
         return 50
     @property
     def CLEARNUMBER_HARD(self):
-        return 100
+        return 150
     def CLEARNUMBER(self, level):
         if level == self.EASY:
             return self.CLEARNUMBER_EASY
